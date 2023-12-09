@@ -1,0 +1,99 @@
+syntax = "proto3";
+option csharp_namespace = "GrpcManutencao";
+
+import "google/api/annotations.proto";
+
+package productit;
+
+service ProductIt
+{
+    rpc CreateProduct(CreateProductRequest) returns(CreateProductResponse)
+    {
+        option(google.api.http) =
+        {
+            post : "/v1/product",
+            body : "*"
+        };
+    }
+    rpc ReadProduct(ReadProductRequest) returns (ReadProductResponse)
+    {
+        option(google.api.http) =
+        {
+            get: "/v1/product/{id}"
+        };
+    }
+    rpc ListProduct (GetAllRequest) returns (GetAllResponse)
+    {
+        option(google.api.http) = 
+        {
+            get: "/v1/products"     
+        };
+    }
+    rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse)
+    {
+        option(google.api.http) = 
+        {
+            put: "/v1/product",
+            body : "*"
+        };
+    }
+    
+    rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse)
+    {
+        option(google.api.http) = 
+        {
+            delete : "/v1/product/{id}"
+        };
+    }
+
+}
+message CreateProductRequest
+{
+    string nome = 1;
+    string descricao = 2;  
+}
+
+message CreateProductResponse
+{
+    int32 id = 1;
+}
+
+message ReadProductRequest
+{
+    int32 id = 1;    
+}
+
+message ReadProductResponse
+{
+    int32 id = 1;
+    string nome = 2;
+    string descricao = 3;
+    string status = 4;    
+}
+
+message GetAllRequest{}
+message GetAllResponse
+{
+    repeated ReadProductResponse product = 1;  
+}
+message UpdateProductRequest
+{
+    int32 id = 1;
+    string nome= 2;
+    string descricao = 3;
+    string status = 4;
+
+}
+message UpdateProductResponse
+{
+    int32 id = 1;    
+}
+
+message DeleteProductRequest
+{
+    int32 id =1;
+}
+message DeleteProductResponse
+{
+    int32 id = 1;
+}
